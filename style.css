@@ -7,13 +7,15 @@
 html {
     width: 100%;
     height: 100%;
+    overscroll-behavior-y: contain;
 }
 
 body {
     width: 100%;
     height: 100%;
-    background-color: black;
+    background-color: #1f1f1f;
     position: relative;
+    overscroll-behavior-y: contain;
 }
 
 canvas {

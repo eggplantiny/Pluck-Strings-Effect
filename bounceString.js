@@ -1,6 +1,6 @@
-import { lineCircle } from "./utils.js"
+import { lineCircle, getRandomArbitrary } from "./utils.js"
 
-const BOUNCE = 0.80
+const BOUNCE = 0.9
 
 export class BounceString {
     constructor (pos, color) {
@@ -41,7 +41,7 @@ export class BounceString {
 
     animate (ctx, moveX, moveY) {
         ctx.beginPath()
-        ctx.fillStyle = '#ff00ff'
+        ctx.fillStyle = '#fdcfdf'
         ctx.arc(moveX, moveY, 20, 0, Math.PI * 2, false)
         ctx.fill()
 
@@ -58,7 +58,7 @@ export class BounceString {
             moveY,
             this.detect
         )) {
-            this.detect = 100
+            this.detect = 150
             const tx = (this.points[1].ox + moveX) / 2
             const ty = moveY
 
@@ -69,9 +69,9 @@ export class BounceString {
             const tx = this.points[1].ox
             const ty = this.points[1].oy
             this.points[1].vx += tx - this.points[1].x
-            this.points[1].vy *= BOUNCE
+            this.points[1].vy *= getRandomArbitrary(BOUNCE / 2, BOUNCE)
             this.points[1].vy += ty - this.points[1].y
-            this.points[1].vy *= BOUNCE
+            this.points[1].vy *= getRandomArbitrary(BOUNCE / 2, BOUNCE)
         }
 
         this.points[1].x += this.points[1].vx

@@ -41,7 +41,7 @@ class App {
         this.ctx.scale(this.pixelRatio, this.pixelRatio)
 
         const xGap = 0
-        const yGap = 20
+        const yGap = 16
         const x1 = xGap
         const x2 = this.stageWidth - xGap
         const total = Math.floor((this.stageHeight - yGap) / yGap)
@@ -56,7 +56,7 @@ class App {
                     x2: x2,
                     y2: c * yGap + yGap
                 },
-                '#ff5038'
+                '#bce6eb'
             )
 
             this.strings.push(bounceString)
