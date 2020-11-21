@@ -16,12 +16,18 @@ class App {
 
         this.resize()
 
-        this.ball = new Ball(this.stageWidth, this.stageHeight, 70, 6)
+        this.ball = new Ball(this.stageWidth, this.stageHeight, 35, 3)
 
         window.addEventListener('resize', this.resize.bind(this), false)
-        document.addEventListener('pointerdown', this.onDown.bind(this), false)
-        document.addEventListener('pointermove', this.onMove.bind(this), false)
-        document.addEventListener('pointerup', this.onUp.bind(this), false)
+        document.addEventListener('mousedown', this.onDown.bind(this), false)
+        document.addEventListener('mousemove', this.onMove.bind(this), false)
+        document.addEventListener('mouseup', this.onUp.bind(this), false)
+
+        if (!!('ontouchstart' in window)) {
+            document.addEventListener('touchstart', this.onTouchStart.bind(this), false)
+            document.addEventListener('touchmove', this.onTouchMove.bind(this), false)
+            document.addEventListener('touchend', this.onTouchEnd.bind(this), false)
+        }
 
         window.requestAnimationFrame(this.animate.bind(this))
     }
@@ -34,7 +40,7 @@ class App {
         this.canvas.height = this.stageHeight * this.pixelRatio
         this.ctx.scale(this.pixelRatio, this.pixelRatio)
 
-        const xGap = 20
+        const xGap = 0
         const yGap = 20
         const x1 = xGap
         const x2 = this.stageWidth - xGap
@@ -84,6 +90,33 @@ class App {
     }
 
     onUp (e) {
+        this.isDown = false
+
+        this.moveX = -5000
+        this.moveY = -5000
+    }
+
+    onTouchStart (e) {
+        this.isDown = true
+        const touch = e.touches[0]
+        const { pageX, pageY } = touch
+
+        this.moveX = pageX
+        this.moveY = pageY
+    }
+
+    onTouchMove (e) {
+        //e.preventDefault()
+        const touch = e.touches[0]
+        const { pageX, pageY } = touch
+
+        if (this.isDown) {
+            this.moveX = pageX
+            this.moveY = pageY
+        }
+    }
+
+    onTouchEnd (e) {
         this.isDown = false
 
         this.moveX = -5000
