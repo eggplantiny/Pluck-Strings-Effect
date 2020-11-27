@@ -42,7 +42,7 @@ export class BounceString {
     animate (ctx, moveX, moveY) {
         ctx.beginPath()
         ctx.fillStyle = '#fdcfdf'
-        ctx.arc(moveX, moveY, 20, 0, Math.PI * 2, false)
+        ctx.arc(moveX, moveY, 40, 0, Math.PI * 2, false)
         ctx.fill()
 
         ctx.beginPath()
@@ -58,7 +58,7 @@ export class BounceString {
             moveY,
             this.detect
         )) {
-            this.detect = 150
+            this.detect = 300
             const tx = (this.points[1].ox + moveX) / 2
             const ty = moveY
 
@@ -69,9 +69,9 @@ export class BounceString {
             const tx = this.points[1].ox
             const ty = this.points[1].oy
             this.points[1].vx += tx - this.points[1].x
-            this.points[1].vy *= getRandomArbitrary(BOUNCE / 2, BOUNCE)
+            this.points[1].vy *= getRandomArbitrary(-0.2, BOUNCE)
             this.points[1].vy += ty - this.points[1].y
-            this.points[1].vy *= getRandomArbitrary(BOUNCE / 2, BOUNCE)
+            this.points[1].vy *= getRandomArbitrary(-0.2, BOUNCE)
         }
 
         this.points[1].x += this.points[1].vx
@@ -82,15 +82,25 @@ export class BounceString {
 
         ctx.moveTo(prevX, prevY)
 
-        for (let c = 0; c < this.points.length; c++) {
-            const cx = (prevX + this.points[c].x) / 2
-            const cy = (prevY + this.points[c].y) / 2
+        this.points.forEach(point => {
+            const cx = (prevX + point.x) / 2
+            const cy = (prevY + point.y) / 2
 
             ctx.quadraticCurveTo(prevX, prevY, cx, cy)
 
-            prevX = this.points[c].x
-            prevY = this.points[c].y
-        }
+            prevX = point.x
+            prevY = point.y
+        })
+
+        // for (let c = 0; c < this.points.length; c++) {
+        //     const cx = (prevX + this.points[c].x) / 2
+        //     const cy = (prevY + this.points[c].y) / 2
+
+        //     ctx.quadraticCurveTo(prevX, prevY, cx, cy)
+
+        //     prevX = this.points[c].x
+        //     prevY = this.points[c].y
+        // }
         
         ctx.lineTo(prevX, prevY)
         ctx.stroke()
